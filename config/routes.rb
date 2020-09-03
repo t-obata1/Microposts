@@ -13,13 +13,18 @@ Rails.application.routes.draw do
   resources :users, only:[:index,:show,:new,:create] do
     member do
       get :followings
-      get:followers
+      get :followers
+      get :favorites
     end
     # collection do
     #   get search
     # end
   end
   
-  resources :microposts, only:[:create, :destroy]
-  resources :relationships, only: [:create, :destroy]
+  
+  
+  #アクションなのでviewやshowはいらない
+  resources :microposts, only:[:create, :destroy] #投稿する、投稿を消す
+  resources :relationships, only: [:create, :destroy] #フォローする、フォロー取り消す
+  resources :favorites, only: [:create, :destroy] #ふぁぼる、ふぁぼを取り消す
 end

@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @microposts = @user.microposts.order(id: :desc).page(params[:page])
     counts(@user)
+    # @favorite_microposts = @user.favorite_microposts 
   end
 
   def new
@@ -40,6 +41,11 @@ class UsersController < ApplicationController
     counts(@user)
   end
 
+  def favorites
+    @user = User.find(params[:id])
+    @favorites = @user.favorite_microposts.page(params[:page])
+  end
+  
 private
 
   def user_params #require 必要とする  #permit 許可する

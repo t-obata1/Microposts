@@ -22,7 +22,10 @@ class User < ApplicationRecord
   #revers_of_relationshipの中から、user_idを取得。
   #自分をフォローしているユーザを取得できる。
   
-  def follow(other_user) #other_user...引数。 rails cでuser2をいれたところ"
+  has_many :favorites
+  has_many :favorite_microposts, through: :favorites, source: :micropost
+  
+  def follow(other_user) 
     unless self == other_user
       self.relationships.find_or_create_by(follow_id: other_user.id)
       #relationshipsテーブルから、follow_id: other_user.idが見つかれば取得、無ければ作成してくれる
