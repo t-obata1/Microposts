@@ -14,17 +14,16 @@ Rails.application.routes.draw do
     member do
       get :followings
       get :followers
-      get :favorites
+      get :favorites #userがふぁぼっている投稿一覧のページ /users/:id/favorites(.:format)  
     end
-    # collection do
-    #   get search
-    # end
   end
   
-  
-  
+
   #アクションなのでviewやshowはいらない
-  resources :microposts, only:[:create, :destroy] #投稿する、投稿を消す
+  resources :microposts, only:[:create, :destroy] do
+    resource :favorites, only: [:create, :destroy]
+  end 
+  
   resources :relationships, only: [:create, :destroy] #フォローする、フォロー取り消す
   resources :favorites, only: [:create, :destroy] #ふぁぼる、ふぁぼを取り消す
 end

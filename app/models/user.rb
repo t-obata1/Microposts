@@ -45,4 +45,9 @@ class User < ApplicationRecord
     Micropost.where(user_id: self.following_ids + [self.id])
   end
   
+  # def favoriteing?(user)
+  #   favorites.where(user_id: user.id).exists?
+  # end
 end
+
+#userモデルにメソッドかけばいいの？リレーションしてるからおｋてこと？
