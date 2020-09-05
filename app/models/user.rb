@@ -54,8 +54,8 @@ class User < ApplicationRecord
     favorite.destroy if favorite
   end
   
-  def favoriteing?(hikisuu)
-    self.favorite_microposts.include?(hikisuu) #self.favorite.include?になっていて、中間テーブルの先を指定できていなかった。
+  def favoriteing?(micropost)
+    self.favorite_microposts.include?(micropost)  #self.favorite.include?になっていて、中間テーブルの先を指定できていなかった。
   end
   
 end
