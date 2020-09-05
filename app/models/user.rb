@@ -22,8 +22,8 @@ class User < ApplicationRecord
   #revers_of_relationshipの中から、user_idを取得。
   #自分をフォローしているユーザを取得できる。
   
-  has_many :favorites
-  has_many :favorite_microposts, through: :favorites, source: :micropost
+  has_many :favorites #中間テーブルを参照
+  has_many :favorite_microposts, through: :favorites, source: :micropost #中間テーブルの先のmicropostsテーブルを参照
   
   def follow(other_user) 
     unless self == other_user
@@ -45,9 +45,18 @@ class User < ApplicationRecord
     Micropost.where(user_id: self.following_ids + [self.id])
   end
   
-  # def favoriteing?(user)
-  #   favorites.where(user_id: user.id).exists?
-  # end
+  def favorite(micropost)
+    favorites.find_or_create_by(micropost_id: micropost.id)  
+  end
+  
+  def unfavorite(micropost)
+    favorite = favorites.find_by(micropost_id: micropost.id)
+    favorite.destroy if favorite
+  end
+  
+  def favoriteing?(hikisuu)
+    self.favorite_microposts.include?(hikisuu) #self.favorite.include?になっていて、中間テーブルの先を指定できていなかった。
+  end
+  
 end
 
-#userモデルにメソッドかけばいいの？リレーションしてるからおｋてこと？
